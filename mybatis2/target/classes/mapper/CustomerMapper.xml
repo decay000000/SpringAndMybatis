@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="customer">
+    <select id="findCustomerByNameAndJobs" parameterType="customer" resultType="customer">
+        select * from customer where 1=1
+        <if test="username != null and username !=''">
+            and  username like concat('%',#{username},'%')
+        </if>
+        <if test="jobs != null and jobs != ''">
+            and jobs=#{jobs}
+        </if>
+    </select>
+
+    <select id="findCustomerByNameOrJobs" parameterType="customer" resultType="customer">
+        select * from customer where 1=1
+        <choose>
+            <when test="username!=null and username!=''">
+                and username like concat('%',#{username},'%')
+            </when>
+            <when test="jobs!=null and jobs!=''">
+                and jobs=#{jobs}
+            </when>
+            <otherwise>
+                and phone is not null
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findCustomerByNameAndJobsTagByWhere" parameterType="customer" resultType="customer">
+        select * from customer
+        <trim prefix="where" prefixOverrides="and">
+<!--        <where>-->
+            <if test="username!=null and username!=''">
+                and username like concat('%',#{username},'%')
+            </if>
+            <if test="jobs!=null and jobs!=''">
+                and jobs=#{jobs}
+            </if>
+<!--        </where>-->
+        </trim>
+    </select>
+
+    <update id="updateCustomerBySet" parameterType="customer">
+        update customer
+        <set>
+            <if test="username!=null and username!=''">
+                username=#{username},
+            </if>
+            <if test="jobs!=null and jobs!=''">
+                jobs=#{jobs},
+            </if>
+            <if test="phone!=null and phone!=''">
+                phone=#{phone},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="findByArray" parameterType="java.util.Arrays" resultType="customer">
+        select * from customer where id in
+        <foreach collection="array" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="findByList" parameterType="java.util.Arrays" resultType="customer">
+        select * from customer where username in
+        <foreach collection="list" index="index" item="customer" open="(" separator="," close=")">
+            #{customer.username}
+        </foreach>
+    </select>
+
+    <select id="findByMap" parameterType="java.util.Map" resultType="customer">
+        select * from customer where jobs like concat('%',#{jobs},'%') and id in
+        <foreach collection="id" index="index" item="roleMap" open="(" separator="," close=")">
+            #{roleMap}
+        </foreach>
+    </select>
+</mapper>

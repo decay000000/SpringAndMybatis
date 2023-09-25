@@ -71,6 +71,13 @@
 
     <select id="findByList" parameterType="java.util.Arrays" resultType="customer">
         select * from customer where username in
+        <foreach collection="list" index="index" item="name" open="(" separator="," close=")">
+            #{name}
+        </foreach>
+    </select>
+
+    <select id="findByListOfObject" parameterType="java.util.Arrays" resultType="customer">
+        select * from customer where username in
         <foreach collection="list" index="index" item="customer" open="(" separator="," close=")">
             #{customer.username}
         </foreach>

@@ -71,6 +71,17 @@ public class CustomerTest {
     @Test
     public void findByListTest(){
         SqlSession session = MyBatisUtils.getSession();
+        ArrayList<String> names = new ArrayList<String>();
+        names.add("jake");
+        names.add("rose");
+        List<Customer> customers = session.selectList("findByList",names);
+        for (Customer customer : customers) {
+            System.out.println(customer.toString());
+        }
+    }
+    @Test
+    public void findByListTestObject(){
+        SqlSession session = MyBatisUtils.getSession();
         ArrayList<Customer> names = new ArrayList<Customer>();
         Customer customer1 = new Customer();
         customer1.setUsername("joy");
@@ -78,7 +89,7 @@ public class CustomerTest {
         customer2.setUsername("rose");
         names.add(customer1);
         names.add(customer2);
-        List<Customer> customers = session.selectList("findByList",names);
+        List<Customer> customers = session.selectList("findByListOfObject",names);
         for (Customer customer : customers) {
             System.out.println(customer.toString());
         }

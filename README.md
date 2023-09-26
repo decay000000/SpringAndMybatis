@@ -39,9 +39,10 @@ Setting -> Build,Execution,Deployment -> Build Tools -> Maven，然后将Maven h
 右键resources文件夹，选择Mark Directory as进行设置，将其标记为资源文件。
 ![markResources](https://github.com/decay000000/mybatis_java/blob/main/picture/not_find_resources.png)
 
-## foreach标签下item值的设置
+## foreach标签下属性值的设置
+下面三个是我基于三种不同的序列方式，进行的动态SQL组装。
 ```xml
-<!--    基于数组-->
+<!-- 基于数组 -->
 <select id="findByArray" parameterType="java.util.Arrays" resultType="customer">
   select * from customer where id in
   <foreach collection="array" index="index" item="id" open="(" separator="," close=")">
@@ -49,7 +50,7 @@ Setting -> Build,Execution,Deployment -> Build Tools -> Maven，然后将Maven h
   </foreach>
 </select>
 
-<!--    基于列表-->
+<!-- 基于列表 -->
 <select id="findByList" parameterType="java.util.Arrays" resultType="customer">
   select * from customer where username in
   <foreach collection="list" index="index" item="name" open="(" separator="," close=")">
@@ -57,7 +58,7 @@ Setting -> Build,Execution,Deployment -> Build Tools -> Maven，然后将Maven h
   </foreach>
 </select>
 
-<!--    基于Map-->
+<!-- 基于Map -->
 <select id="findByMap" parameterType="java.util.Map" resultType="customer">
   select * from customer where jobs like concat('%',#{jobs},'%') and id in
   <foreach collection="id" index="index" item="roleMap" open="(" separator="," close=")">
@@ -65,3 +66,4 @@ Setting -> Build,Execution,Deployment -> Build Tools -> Maven，然后将Maven h
   </foreach>
 </select>
 ```
+可以看出内容大致时相同，不同的地方只有select标签中parameterType的值和foreach中的各属性的值。parameterType好说，可以简单理解为传入参数的类型，关于foreach部分我自己也不是很懂，就去搜了一下。

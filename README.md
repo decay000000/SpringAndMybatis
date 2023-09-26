@@ -5,14 +5,15 @@
   * [工程在其他地方打开maven内容重新下载](#工程在其他地方打开maven内容重新下载)
   * [resources文件夹下配置文件识别不到问题](#resources文件夹下配置文件识别不到问题)
 * 思考发现与实验
-  * [foreach标签下item值的设置](#foreach标签下item值的设置)
+  * [foreach标签下属性值的设置](#foreach标签下属性值的设置)
+    * [关于item元素类型的思考](#关于item元素类型的思考)
 
 ## 介绍
-这是我在学校学习mybatis框架时所使用的项目工程，在此记录我遇到的问题和解决方法与新的发现<br>
+这是我在学校学习mybatis框架时所使用的项目工程，在此记录我遇到的问题和解决方法与新的发现  
 ps:因为本人只用过idea，所以大部分的解决操作步骤都是针对idea的。
 
 ## 工程在其他地方打开maven内容重新下载
-这个问题出现在我将项目移到机房电脑时出现，当我对pom.xml文件进行Reimport时，相关依赖包被重新下载。<br>
+这个问题出现在我将项目移到机房电脑时出现，当我对pom.xml文件进行Reimport时，相关依赖包被重新下载。  
 机房电脑本身应该是不需要下载的（因为我建一个新的项目时就不需要下载），出现这种情况原因可能是两台电脑的maven所在路径不同导致的，一般都是maven地址被人为修改了。
 #### 解决方法：
 Setting -> Build,Execution,Deployment -> Build Tools -> Maven，然后将Maven home directory、User setting file、Local repository改为与目标电脑一致，建议直接取消勾选Override，可能取消后还是找不到，建议把路径该回去再取消，如果不知道路径可以建一个新项目对照着改。
@@ -72,4 +73,41 @@ Setting -> Build,Execution,Deployment -> Build Tools -> Maven，然后将Maven h
 * open：foreach代码的开始符号
 * separator：元素之间的分隔符
 * close: foreach代码的关闭符号
-* collection: 执行foreach的对象，对象为数组或列表时值为array，对象为Map时属性值为键值
+* collection: 执行foreach的对象，对象为数组或列表时值为array，对象为Map时属性值为键值  
+通过观察上述代码中foreach的结果：
+```
+(1,2,3)
+('jack','rose')
+(1,2,3)
+```
+可以发现这些属性的对应作用，item为迭代时的零时变量，collection为迭代的对象，open为foreach全部输出内容的开头符号，close为foreach全部输出内容的结束符号，separator为循环过程中输出内容之间的间隔符。
+
+### 关于item元素可用类型类型的思考
+既然item可以接受基本数据类型，那是否也可以接受一个类对象呢，所以我将代码部分进行了更改
+```xml
+<select id="findByListOfObject" parameterType="java.util.Arrays" resultType="customer">
+  select * from customer where username in
+  <foreach collection="list" index="index" item="customer" open="(" separator="," close=")">
+    #{customer.username}
+  </foreach>
+</select>
+```
+测试部分的传入参数变成了一个customer类的列表：
+```java
+@Test
+    public void findByListTestObject(){
+        SqlSession session = MyBatisUtils.getSession();
+        ArrayList<Customer> names = new ArrayList<Customer>();
+        Customer customer1 = new Customer();
+        customer1.setUsername("joy");
+        Customer customer2 = new Customer();
+        customer2.setUsername("rose");
+        names.add(customer1);
+        names.add(customer2);
+        List<Customer> customers = session.selectList("findByListOfObject",names);
+        for (Customer customer : customers) {
+            System.out.println(customer.toString());
+        }
+    }
+```
+实验结果是可以进行查询的，

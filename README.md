@@ -9,6 +9,7 @@ ps:因为本人只用过idea，所以大部分的解决操作步骤都是针对i
 机房电脑本身应该是不需要下载的（因为我建一个新的项目时就不需要下载），出现这种情况原因可能是两台电脑的maven所在路径不同导致的，一般都是maven地址被人为修改了。
 #### 解决方法：
 Setting -> Build,Execution,Deployment -> Build Tools -> Maven，然后将Maven home directory、User setting file、Local repository改为与目标电脑一致。
+![图片](https://github.com/decay000000/mybatis_java/blob/main/picture/maven_set.png)
 
 ## resources文件夹下配置文件识别不到问题
 这个问题出现在我将项目移到机房电脑时出现，运行时出现报错，找不到config和mapper，后来发现是pom中没有指定resources，按道理来说哪怕不指定默认也会去target里面找，可事实是并没有，暂时认为原因是因为我的导出方法有问题。

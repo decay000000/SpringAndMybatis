@@ -16,4 +16,20 @@
         <association property="card" column="card_id" javaType="idcard"
                      select="mapper.idcardMapper.findCodeById"/>
     </resultMap>
+
+    <select id="findPersonById1" parameterType="int" resultMap="cardPersonResult1">
+        select person.*,idcard.code
+        from person,idcard
+        where person.card_id=idcard.id and person.id = #{id}
+    </select>
+    <resultMap id="cardPersonResult1" type="person">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <result property="sex" column="sex"/>
+        <association property="card" javaType="idcard">
+            <id property="id" column="card_id"/>
+            <result property="code" column="code"/>
+        </association>
+    </resultMap>
 </mapper>

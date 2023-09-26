@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.productMapper">
+    <select id="findProductById" parameterType="int" resultType="product">
+        select * from product where id in(
+            select product_id from ordersitem where orders_id = #{id}
+        )
+    </select>
+
+    <select id="findOrdersByProduct" parameterType="int" resultMap="ordersListResult">
+        select ordersitem.*,orders.id as oid,number
+        from ordersitem,orders
+        where ordersitem.product_id = #{id}
+        and ordersitem.orders_id = orders.id
+    </select>
+    <resultMap id="ordersListResult" type="orders">
+        <id property="id" column="oid"/>
+        <result property="number" column="number"/>
+    </resultMap>
+</mapper>

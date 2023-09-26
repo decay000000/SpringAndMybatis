@@ -1,4 +1,5 @@
 import com.pyw.pojo.Customer;
+import com.pyw.pojo.User;
 import com.pyw.utils.MyBatisUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;

@@ -79,7 +79,7 @@
     <select id="findByListOfObject" parameterType="java.util.Arrays" resultType="customer">
         select * from customer where username in
         <foreach collection="list" index="index" item="customer" open="(" separator="," close=")">
-            #{customer.username}
+            #{customer.uname}
         </foreach>
     </select>
 

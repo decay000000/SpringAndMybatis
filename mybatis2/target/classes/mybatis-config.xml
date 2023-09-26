@@ -20,8 +20,12 @@
         <typeAlias alias="customer" type="com.pyw.pojo.Customer"/>
         <typeAlias alias="idcard" type="com.pyw.pojo.IdCard"/>
         <typeAlias alias="person" type="com.pyw.pojo.Person"/>
+        <typeAlias alias="users" type="com.pyw.pojo.Users"/>
+        <typeAlias alias="orders" type="com.pyw.pojo.Orders"/>
+        <typeAlias alias="product" type="com.pyw.pojo.Product"/>
+        <typeAlias alias="ordersitem" type="com.pyw.pojo.Ordersitem"/>
     </typeAliases>
-    
+
     <environments default="development">
 
         <environment id="development">
@@ -51,6 +55,9 @@
         <mapper resource="mapper/CustomerMapper.xml"/>
         <mapper resource="mapper/personMapper.xml"/>
         <mapper resource="mapper/idcardMapper.xml"/>
+        <mapper resource="mapper/usersMapper.xml"/>
+        <mapper resource="mapper/ordersMapper.xml"/>
+        <mapper resource="mapper/productMapper.xml"/>
     </mappers>
 
 </configuration>

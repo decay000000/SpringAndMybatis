@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.ordersMapper">
+    <select id="findOrdersWithProduct" parameterType="int" resultMap="ordersProductResult">
+        select * from orders where id = #{id}
+    </select>
+    <resultMap id="ordersProductResult" type="ordersitem">
+        <id property="id" column="id"/>
+        <result property="number" column="number"/>
+        <collection property="productList" column="id" ofType="product"
+                    select="mapper.productMapper.findProductById"/>
+    </resultMap>
+
+    <select id="findOrdersWithProduct1" parameterType="int" resultMap="ordersProductResult1">
+        select orders.*,product.id as pid,name,price
+        from orders,product,ordersitem
+        where orders.id = orders_id
+        and product.id = product_id
+        and orders.id = #{id}
+    </select>
+    <resultMap id="ordersProductResult1" type="ordersitem">
+        <id property="id" column="id"/>
+        <result property="number" column="number"/>
+        <collection property="productList" ofType="product">
+            <id property="id" column="pid"/>
+            <result property="name" column="name"/>
+            <result property="price" column="price"/>
+            <collection property="ordersList" column="pid" ofType="orders"
+                        select="mapper.productMapper.findOrdersByProduct"/>
+        </collection>
+    </resultMap>
+</mapper>

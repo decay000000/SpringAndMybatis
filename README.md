@@ -36,3 +36,4 @@ Setting -> Build,Execution,Deployment -> Build Tools -> Maven，然后将Maven h
 #### 解决方法二：
 将resources包标记为资源文件。<br>
 右键resources文件夹，选择Mark Directory as进行设置
+![maven](https://github.com/decay000000/mybatis_java/blob/main/picture/maven_set.png)

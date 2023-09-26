@@ -41,6 +41,7 @@ Setting -> Build,Execution,Deployment -> Build Tools -> Maven，然后将Maven h
 
 ## foreach标签下item值的设置
 ```xml
+<!--    基于数组-->
 <select id="findByArray" parameterType="java.util.Arrays" resultType="customer">
   select * from customer where id in
   <foreach collection="array" index="index" item="id" open="(" separator="," close=")">
@@ -48,6 +49,7 @@ Setting -> Build,Execution,Deployment -> Build Tools -> Maven，然后将Maven h
   </foreach>
 </select>
 
+<!--    基于列表-->
 <select id="findByList" parameterType="java.util.Arrays" resultType="customer">
   select * from customer where username in
   <foreach collection="list" index="index" item="name" open="(" separator="," close=")">
@@ -55,6 +57,7 @@ Setting -> Build,Execution,Deployment -> Build Tools -> Maven，然后将Maven h
   </foreach>
 </select>
 
+<!--    基于Map-->
 <select id="findByMap" parameterType="java.util.Map" resultType="customer">
   select * from customer where jobs like concat('%',#{jobs},'%') and id in
   <foreach collection="id" index="index" item="roleMap" open="(" separator="," close=")">

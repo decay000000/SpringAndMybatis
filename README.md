@@ -82,7 +82,7 @@ Setting -> Build,Execution,Deployment -> Build Tools -> Maven，然后将Maven h
 ```
 可以发现这些属性的对应作用，item为迭代时的零时变量，collection为迭代的对象，open为foreach全部输出内容的开头符号，close为foreach全部输出内容的结束符号，separator为循环过程中输出内容之间的间隔符。
 
-### 关于item元素可用类型类型的思考
+### 关于item元素可用类型的思考
 既然item可以接受基本数据类型，那是否也可以接受一个类对象呢，所以我将代码部分进行了更改
 ```xml
 <select id="findByListOfObject" parameterType="java.util.Arrays" resultType="customer">
@@ -110,4 +110,5 @@ Setting -> Build,Execution,Deployment -> Build Tools -> Maven，然后将Maven h
         }
     }
 ```
-实验结果是可以进行查询的，
+运行测试类，查询成功说明是可行的，我又将customer类换为了user类，依旧可以进行查询。  
+由此可以暂时得出foreach中也可以接受一个类序列，并且这个类型可以不与命名空间对象类型相同。

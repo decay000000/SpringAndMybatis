@@ -67,3 +67,9 @@ Setting -> Build,Execution,Deployment -> Build Tools -> Maven，然后将Maven h
 </select>
 ```
 可以看出内容大致时相同，不同的地方只有select标签中parameterType的值和foreach中的各属性的值。parameterType好说，可以简单理解为传入参数的类型，关于foreach部分我自己也不是很懂，就去搜了一下。
+* item：集合中元素迭代时的别名
+* index：在list、array中，index为元素的序号索引；在Map中，index为遍历元素的key值，该参数为可选项
+* open：foreach代码的开始符号
+* separator：元素之间的分隔符
+* close: foreach代码的关闭符号
+* collection: 执行foreach的对象，对象为数组或列表时值为array，对象为Map时属性值为键值

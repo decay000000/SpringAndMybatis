@@ -4,6 +4,8 @@
 * 项目所遇到的外在问题和解决方案
   * [工程在其他地方打开maven内容重新下载](#工程在其他地方打开maven内容重新下载)
   * [resources文件夹下配置文件识别不到问题](#resources文件夹下配置文件识别不到问题)
+*思考发现与实验
+		* 
 
 ## 介绍
 这是我在学校学习mybatis框架时所使用的项目工程，在此记录我遇到的问题和解决方法与新的发现<br>
@@ -36,3 +38,6 @@ Setting -> Build,Execution,Deployment -> Build Tools -> Maven，然后将Maven h
 #### 解决方法二：
 右键resources文件夹，选择Mark Directory as进行设置，将其标记为资源文件。
 ![markResources](https://github.com/decay000000/mybatis_java/blob/main/picture/not_find_resources.png)
+
+## foreach标签下item值的设置
+

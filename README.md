@@ -4,6 +4,7 @@
 * 项目所遇到的外在问题和解决方案
   * [工程在其他地方打开maven内容重新下载](#工程在其他地方打开maven内容重新下载)
   * [resources文件夹下配置文件识别不到问题](#resources文件夹下配置文件识别不到问题)
+  * [插入汉字乱码](#插入汉字乱码)
 * 思考发现与实验
   * [foreach标签下属性值的设置](#foreach标签下属性值的设置)
     * [关于item元素可用类型的思考](#关于item元素可用类型的思考)
@@ -39,6 +40,33 @@ Setting -> Build,Execution,Deployment -> Build Tools -> Maven，然后将Maven h
 #### 解决方法二：
 右键resources文件夹，选择Mark Directory as进行设置，将其标记为资源文件。
 ![markResources](https://github.com/decay000000/mybatis_java/blob/main/picture/not_find_resources.png)
+
+## 插入汉字乱码
+这个问题也是出现在机房电脑上，在使用insert标签做插入时，可以成功插入数据，但是汉字是“？？？”，数据库编码也是utf-8，原因暂时不明，因为在我自己电脑上没有出现这个问题。  
+问题呢出在数据库配置文件db.properties上
+```
+mysql.driver=com.mysql.cj.jdbc.Driver
+
+mysql.url=jdbc:mysql://localhost:3306/mybatis?serverTimezone=UTC&
+
+characterEncoding=utf8&useUnicode=true&useSSL=false
+
+mysql.username=root
+
+mysql.password=root
+```
+#### 解决方法
+~~说实话解决方法有点玄学~~
+把characterEncoding那句话接在mysql.url后面就行了
+```
+mysql.driver=com.mysql.cj.jdbc.Driver
+
+mysql.url=jdbc:mysql://localhost:3306/mybatis?serverTimezone=UTC&characterEncoding=utf8&useUnicode=true&useSSL=false
+
+mysql.username=root
+
+mysql.password=root
+```
 
 ## foreach标签下属性值的设置
 下面三个是我基于三种不同的序列方式，进行的动态SQL组装。

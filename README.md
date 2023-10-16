@@ -1,4 +1,4 @@
-# mybatis_java
+# Spring & Mybatis java
 # 导航
 * [介绍](#介绍)
 * 项目所遇到的外在问题和解决方案

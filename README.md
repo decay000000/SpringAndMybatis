@@ -68,7 +68,7 @@ mysql.username=root
 mysql.password=root
 ```
 
-## foreach标签下属性值的设置
+## Mybaits中foreach标签下属性值的设置
 下面三个是我基于三种不同的序列方式，进行的动态SQL组装。
 ```xml
 <!-- 基于数组 -->
@@ -140,3 +140,5 @@ mysql.password=root
 ```
 运行测试类，查询成功说明是可行的，我又将customer类换为了user类，依旧可以进行查询。  
 由此可以暂时得出foreach中也可以接受一个类序列，并且这个类型可以不与命名空间对象类型相同。
+
+## Spring中constructor-arg和property

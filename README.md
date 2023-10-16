@@ -151,5 +151,7 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 
    
 我是完全按照教学的内容做的，只设置了get和set方法，问题出现的原因是缺少默认构造方法。  
-然后我就开始想了constructor-arg和property的区别，于是我在两个构造方法中加上一条输出语句，来观察这两种注入方式区别。  
-在我调用constructor-arg主导的注入时
+然后我就开始想了constructor-arg和property的区别，于是我在两个构造方法和部分set方法中加上一条输出语句，来观察这两种注入方式区别。  
+在我调用constructor-arg主导的构造注入时，控制台输出了一句“调用全参构造器”，然后我有加了几个含参构造器（非全参），发现它每次都通过参数来精准调用对应的构造方法，当找不到对应构造器的时候会爆出以上错误警告。  
+而当我使用property主导的设值注入时，控制台输出了“调用默认构造器”“通过set设置id”，然后我只保留了默认的无参构造方法，并删除了部分set方法，发现也出现了上述报错。  
+于是乎我猜想使用constructor-arg是通过构造器来注入，类似我们通过new+含参构造器的形式来创建并设置对象，对应构造器必须存在；而使用property时，会先调用默认构造方法，然后通过对应的set方法来设置对象的属性值，对应属性的set方法必须存在

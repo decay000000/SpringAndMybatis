@@ -151,15 +151,36 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 这个报错是因为缺少默认构造方法，当类中有自定义的构造器时，不会自动生成默认的构造方法。  
 解决这个问题后我突然在想constructor-arg和property之间有什么区别，这两种注入方式的结果是完全相同的，那就只可能时执行的方式不同了，鉴于前面报错时因为构造器的原因，于是我在两个构造方法和部分set方法中加上一条输出语句，打算通过构造器和set方法入手，观察这两种注入方式区别。
 ```java
-    public User() { System.out.println("使用默认构造器"); }
+    public void setId(int id) {
+        this.id = id;
+        System.out.println("通过set设置id");
+    }
+
+    public User() { System.out.println("调用默认构造器"); }
 
     public User(int id, String name, String password) {
-        System.out.println("使用全参构造器");
+        System.out.println("调用全参构造器");
         this.id = id;
         this.name = name;
         this.password = password;
     }
 ```
 在我调用constructor-arg主导的构造注入时，控制台输出了一句“调用全参构造器”，然后我又加了几个含参构造器（非全参），发现它每次都通过参数来精准调用对应的构造方法，当找不到对应构造器的时候会爆出以上错误警告。  
+```java
+    public User(int id, String name) {
+        System.out.println("使用含参构造器");
+        this.id = id;
+        this.name = name;
+    }
+运行结果：
+使用id，name构造器
+User{id=1, name='某某', password='null'}
+```
 而当我使用property主导的设值注入时，控制台输出了“调用默认构造器”“通过set设置id”，然后我只保留了默认的无参构造方法，并删除了部分set方法，发现也出现了上述报错。  
+```java
+运行结果：
+使用默认构造器
+正在通过set设置id
+User{id=2, name='谁谁谁', password='******'}
+```
 于是乎我猜想使用constructor-arg是通过构造器来注入，类似我们通过new+含参构造器的形式来创建并设置对象，对应构造器必须存在；而使用property时，会先调用默认构造方法，然后通过对应的set方法来设置对象的属性值，对应属性的set方法必须存在

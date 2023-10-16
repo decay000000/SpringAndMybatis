@@ -8,6 +8,7 @@
 * 思考发现与实验
   * [foreach标签下属性值的设置](#foreach标签下属性值的设置)
     * [关于item元素可用类型的思考](#关于item元素可用类型的思考)
+  * [Spring中constructor-arg和property注入的区别](#Spring中constructor-arg和property注入的区别)
 
 ## 介绍
 这是我在学校学习mybatis框架时所使用的项目工程，在此记录我遇到的问题和解决方法与新的发现  
@@ -141,4 +142,4 @@ mysql.password=root
 运行测试类，查询成功说明是可行的，我又将customer类换为了user类，依旧可以进行查询。  
 由此可以暂时得出foreach中也可以接受一个类序列，并且这个类型可以不与命名空间对象类型相同。
 
-## Spring中constructor-arg和property
+## Spring中constructor-arg和property注入的区别

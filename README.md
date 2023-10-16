@@ -143,3 +143,13 @@ mysql.password=root
 由此可以暂时得出foreach中也可以接受一个类序列，并且这个类型可以不与命名空间对象类型相同。
 
 ## Spring中constructor-arg和property注入的区别
+在学习的过程中开始我用constructor-arg对User类进行构造注入，类里面只有一个全参构造器和一个toString方法，运行时并没有出现异常，而我按部就班继续进行实验时，通过property对User类进行设值注入出现了以下报错：
+
+ 
+警告: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'user2' defined in class path resource [applicationContext.xml]: Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.pyw.User]: No default constructor found; nested exception is java.lang.NoSuchMethodException: com.pyw.User.<init>()  
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'user2' defined in class path resource [applicationContext.xml]: Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.pyw.User]: No default constructor found; nested exception is java.lang.NoSuchMethodException: com.pyw.User.<init>()
+
+   
+我是完全按照教学的内容做的，只设置了get和set方法，问题出现的原因是缺少默认构造方法。  
+然后我就开始想了constructor-arg和property的区别，于是我在两个构造方法中加上一条输出语句，来观察这两种注入方式区别。  
+在我调用constructor-arg主导的注入时

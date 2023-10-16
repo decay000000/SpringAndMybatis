@@ -143,15 +143,13 @@ mysql.password=root
 由此可以暂时得出foreach中也可以接受一个类序列，并且这个类型可以不与命名空间对象类型相同。
 
 ## Spring中constructor-arg和property注入的区别
-在学习的过程中开始我用constructor-arg对User类进行构造注入，类里面只有一个全参构造器和一个toString方法，运行时并没有出现异常，而我按部就班继续进行实验时，通过property对User类进行设值注入出现了以下报错：
-
- 
+在学习的过程中开始我用constructor-arg对User类进行构造注入，类里面只有一个全参构造器和一个toString方法，运行时并没有出现异常，而我按部就班继续进行实验时，对类又增加了get和set方法，然后通过property对User类进行设值注入出现了以下报错：
+```
 警告: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'user2' defined in class path resource [applicationContext.xml]: Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.pyw.User]: No default constructor found; nested exception is java.lang.NoSuchMethodException: com.pyw.User.<init>()  
 org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'user2' defined in class path resource [applicationContext.xml]: Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.pyw.User]: No default constructor found; nested exception is java.lang.NoSuchMethodException: com.pyw.User.<init>()
-
-   
-我是完全按照教学的内容做的，只设置了get和set方法，问题出现的原因是缺少默认构造方法。  
-然后我就开始想了constructor-arg和property的区别，于是我在两个构造方法和部分set方法中加上一条输出语句，来观察这两种注入方式区别。  
+```
+这个报错是因为缺少默认构造方法，当类中有自定义的构造器时，不会自动生成默认的构造方法。  
+解决这个问题后我突然在想constructor-arg和property之间有什么区别，这两种注入方式的结果是完全相同的，那就只可能时执行的方式不同了，鉴于前面报错时因为构造器的原因，于是我在两个构造方法和部分set方法中加上一条输出语句，来观察这两种注入方式区别。  
 在我调用constructor-arg主导的构造注入时，控制台输出了一句“调用全参构造器”，然后我有加了几个含参构造器（非全参），发现它每次都通过参数来精准调用对应的构造方法，当找不到对应构造器的时候会爆出以上错误警告。  
 而当我使用property主导的设值注入时，控制台输出了“调用默认构造器”“通过set设置id”，然后我只保留了默认的无参构造方法，并删除了部分set方法，发现也出现了上述报错。  
 于是乎我猜想使用constructor-arg是通过构造器来注入，类似我们通过new+含参构造器的形式来创建并设置对象，对应构造器必须存在；而使用property时，会先调用默认构造方法，然后通过对应的set方法来设置对象的属性值，对应属性的set方法必须存在

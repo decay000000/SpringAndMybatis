@@ -172,6 +172,7 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
         this.id = id;
         this.name = name;
     }
+
 运行结果：
 使用id，name构造器
 User{id=1, name='某某', password='null'}

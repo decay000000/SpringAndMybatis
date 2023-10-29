@@ -9,7 +9,7 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
-        System.out.println("正在通过set设置id");
+        System.out.println("正在通过setter");
     }
 
     public String getName() { return name; }

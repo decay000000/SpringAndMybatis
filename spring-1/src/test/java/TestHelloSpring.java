@@ -14,6 +14,13 @@ public class TestHelloSpring {
     @Test
     public void testUser1(){
         ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
+        User u = (User) ac.getBean("user1");
+        System.out.println(u);
+    }
+
+    @Test
+    public void testUser2(){
+        ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
         User u = (User) ac.getBean("user2");
         System.out.println(u);
     }

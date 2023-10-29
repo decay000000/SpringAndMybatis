@@ -22,4 +22,11 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
         <property name="name" value="谁谁谁"/>
         <property name="password" value="******"/>
     </bean>
+
+<!--    <bean id="bean" class="com.pyw.Bean" scope="singleton"/>-->
+<!--    <bean id="bean" class="com.pyw.Bean" scope="prototype"/>-->
+
 </beans>
+
+
+
